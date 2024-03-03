@@ -35,5 +35,45 @@ CONTAINER ID   IMAGE          COMMAND                  CREATED         STATUS   
       }
  
 
-      
+## Задача 2.
+terraform {
+  required_providers {
+    yandex = {
+      source = "yandex-cloud/yandex"
+    }
+  }
+  required_version = ">= 0.13"
+}
+
+provider "yandex" {
+  zone = "<зона_доступности_по_умолчанию>"
+}
+
+connection {
+        host = "sometestdn.ukwest.cloudapp.azure.com"
+        user = "testuser"
+        type = "ssh"
+        private_key = "${file("~/.ssh/id_rsa_unencrypted")}"
+        timeout = "1m"
+        agent = true
+    }
+
+    provisioner "remote-exec" {
+        inline = [
+          "sudo apt-get update",
+          "sudo apt-get install docker.io -y",
+          "git clone https://github.com/somepublicrepo.git",
+          "cd Docker-sample",
+          "sudo docker build -t mywebapp .",
+          "sudo docker run -d -p 5000:5000 mywebapp"
+        ]
+    }
+
+
+environment:
+      - "MYSQL_ROOT_PASSWORD=${...}"
+      - MYSQL_DATABASE=wordpress
+      - MYSQL_USER=wordpress
+      - "MYSQL_PASSWORD=${...}"
+      - MYSQL_ROOT_HOST="%"
 
