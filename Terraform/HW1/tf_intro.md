@@ -36,44 +36,70 @@ CONTAINER ID   IMAGE          COMMAND                  CREATED         STATUS   
  
 
 ## Задача 2.
+На данный момент содержимое файла main.tf выглядит так:  
 terraform {
   required_providers {
     yandex = {
-      source = "yandex-cloud/yandex"
+      source  = "yandex-cloud/yandex"
     }
   }
-  required_version = ">= 0.13"
+  required_version = ">=0.13" 
 }
-
 provider "yandex" {
-  zone = "<зона_доступности_по_умолчанию>"
+  zone = "ru-central1-b"
 }
 
-connection {
-        host = "sometestdn.ukwest.cloudapp.azure.com"
-        user = "testuser"
-        type = "ssh"
-        private_key = "${file("~/.ssh/id_rsa_unencrypted")}"
-        timeout = "1m"
-        agent = true
-    }
 
+resource "random_root_password" "random_string" {
+  length      = 16
+  special     = false
+  min_upper   = 1
+  min_lower   = 1
+  min_numeric = 1
+}
+
+resource "random_password" "random_string" {
+  length      = 16
+  special     = false
+  min_upper   = 1
+  min_lower   = 1
+  min_numeric = 1
+}
+
+
+resource "yandex_compute_instance" "vm-1" {
+  name = "test"
+
+  connection {
+    host = "158.160.12.212"
+    user = "test"
+    type = "ssh"
+    private_key = "${file("~/.ssh/id_rsa.pub")}"
+    timeout = "1m"
+    agent = true
+  }
+
+  resource "docker_container" "db-sever1" {
+    name = "db-server"
     provisioner "remote-exec" {
-        inline = [
-          "sudo apt-get update",
-          "sudo apt-get install docker.io -y",
-          "git clone https://github.com/somepublicrepo.git",
-          "cd Docker-sample",
-          "sudo docker build -t mywebapp .",
-          "sudo docker run -d -p 5000:5000 mywebapp"
-        ]
+      command = [
+        "sudo docker run --name mysql \
+           -e "MYSQL_ROOT_PASSWORD=${random_root_password.random_string.result}" \
+           -e MYSQL_DATABASE=wordpress \
+           -e MYSQL_USER=wordpress \
+           -e "MYSQL_PASSWORD=${random_password.random_string.result}" \
+           -e MYSQL_ROOT_HOST="%" \
+           -p 3306:3306 -d mysql:8"
+      ]
     }
+  }
+}
 
 
-environment:
-      - "MYSQL_ROOT_PASSWORD=${...}"
-      - MYSQL_DATABASE=wordpress
-      - MYSQL_USER=wordpress
-      - "MYSQL_PASSWORD=${...}"
-      - MYSQL_ROOT_HOST="%"
-
+Получаю ошибку при выполнении команды "terraform validate":  
+Error: Invalid character
+│ 
+│   on main.tf line 47, in resource "yandex_compute_instance" "vm-1":
+│   47:         "sudo docker run --name mysql \
+│ 
+│ This character is not used within the language.
