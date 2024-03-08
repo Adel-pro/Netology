@@ -12,7 +12,6 @@
   3. Создал отдельную переменную vms_ssh_public_root_key, куда поместил путь до публичного ключа.
   4. Выполнил команды "terraform init" и "terraform apply". Исправил ошибки.
 
-
 ## Задача 2.
   1. Объявил переменные vm_web_image, vm_web_name и vm_web_platform для параметров family, name и platform_id соответственно.
   2. В файл variables.tf следующие переменные:
@@ -50,4 +49,48 @@
   2. Заменил в root модуле имена ВМ на local-переменные.
   3. Применил команду "terraform apply", изменений не произошло.
 
-## Задача 6.
+## Задача 6.    
+  1. В файле variables.tf создал map-переменную vms_resources, в которой объявил 3 переменные (cores, memory, core_fraction):
+     variable "vms_resources" {
+         type = map(any)
+         default = {
+             web = {
+                 cores = "2"
+                 memory = "1"
+                 core_fraction = "20"
+             },
+             db = {
+                 cores = "2"
+                 memory = "2"
+                 core_fraction = "20"
+             }
+         }
+     }
+  2. В этом же файле создал переменную для блока metadata:  
+     variable "metadata" {
+         type = object({serial-port-enable = number, ssh-keys = string})
+         default = {
+             serial-port-enable = 1,
+             ssh-keys           = "ubuntu:ssh-rsa AAAAB ..."
+         }
+     }
+  3. Использовал переменные в файле main.tf.
+  4. Применил команду "terraform plan", изменений не произошло.
+
+## Задача 7.
+  1. local.test_list[1]
+     "staging"
+  2. length(local.test_list)
+     3
+  3. local.test_map["admin"]
+     "John"
+  4. "${ local.test_map["admin"] } is keys(local.test_map)[0] for ${ local.test_list[2] } server based on OS ${ local.servers["production"]["image"] } with ${ local.servers["production"]["cpu"] } vcpu, ${ local.servers["production"]["ram"] } ram and ${ length(local.servers["production"]["disks"]) } virtual disks"
+     "John is admin for production server based on OS ubuntu-20-04 with 10 vcpu, 40 ram and 4 virtual disks"
+
+## Задача 8.
+  1. Создал переменную test в файле variables.tf:
+     variable "test" {
+       type = list(map(list(string)))
+     }
+     Значение самой переменной положил в файл terraform.tfvars. Применил "terraform plan",  
+  3. var.test[0].dev1[0]
