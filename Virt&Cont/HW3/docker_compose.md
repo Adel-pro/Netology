@@ -32,9 +32,8 @@
       Увидел, что проброс портов перестал работать, так как со стороны контейнера указан порт 80, а не 81.  
   12. Поправил ситуацию командами:  
       sudo docker stop custom-nginx-t2  
-      docker commit custom-nginx-t2 custom-nginx-t2-image  
-      docker rm custom-nginx-t2  
-      docker run -d -p 127.0.0.1:8080:81 --name custom-nginx-t2 custom-nginx-t2-image  
+      docker commit custom-nginx-t2 custom-nginx-t2-image    
+      docker run --name custom-nginx-t2-v2 -d -p 127.0.0.1:8080:81 -td custom-nginx-t2-image  
   13. Удалил контейнер командой "docker rm custom-nginx-t2 -f" (скрин docker_rm.png).  
 
 ## Задача 4.
@@ -57,4 +56,4 @@
   7. Удалил в файле манифест, связанный с registry, выполнил команду "docker compose up -d" и вышло предупреждение:  
      WARN[0000] Found orphan containers ([task5-registry-1]) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up.  
      Выполнил команду "docker compose up -d --remove-orphans". Это произошло из-за разных содержимых файлов "compose.yaml" в рабочей директории и /var/run/docker.sock.  
-     Погасил проект командой "docker compose down".         
+     Погасил проект командой "docker compose down". Если нужно убрать томы, то нужно добавить опцию "-v".        
