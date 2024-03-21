@@ -22,7 +22,7 @@ resource "yandex_compute_instance" "storage" {
     dynamic "secondary_disk" {
         for_each = "${yandex_compute_disk.default.*.id}"
         content  {
-            disk_id = yandex_compute_disk.default["${secondary_disk.key}"].id
+            disk_id = secondary_disk.value
         }        
     }
     scheduling_policy {
