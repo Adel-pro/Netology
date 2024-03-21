@@ -3,7 +3,7 @@ resource "local_file" "webhosts_templatefile" {
 
     { webservers = yandex_compute_instance.web, 
       dbservers = yandex_compute_instance.db,
-      diskservers = yandex_compute_instance.storage})
+      diskservers = yandex_compute_instance.storage.*})
 
     filename = "${abspath(path.module)}/hosts.cfg"
 }
