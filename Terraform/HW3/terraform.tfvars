@@ -4,13 +4,6 @@ vms_resources = {
     core_fraction = "20"
 }
 
-
-# metadata = {
-#     serial-port-enable = "1",
-#     ssh-keys           = "ubuntu:${file("~/.ssh/id_rsa.pub")}"
-# }
-
-
 each_vm = [ 
     {
         vm_name     = "main"
