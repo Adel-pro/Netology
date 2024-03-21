@@ -1,6 +1,3 @@
-
-
-
 resource "yandex_compute_instance" "db" {
     for_each = {
         for index, vm in var.each_vm:
