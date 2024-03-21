@@ -69,10 +69,6 @@ variable "vms_resources" {
   type = map(string)
 }
 
-# variable "metadata" {
-#   type = map(string)
-# }
-
 variable "each_vm" {
   type = list(object({  vm_name=string, cpu=number, ram=number, disk_volume=number }))
 }
