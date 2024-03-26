@@ -52,3 +52,8 @@
 3. Использовал оба модуля для создания кластера.
 4. Выполнил команды "terraform init", "terraform plan" и "terraform apply". Кластер создавался больше 5 минут. В итоге, остановил проект командой "terraform destroy".
    ![cluster](https://github.com/Adel-pro/Netology/assets/116494871/6c5d642d-caaa-4adb-8afb-7de58ce846a3)
+
+
+## Задача 6.
+1. Используя пример из https://github.com/terraform-yc-modules/terraform-yc-s3, создал module "simple-bucket" размером 1 ГБ.
+   ![bucket](https://github.com/Adel-pro/Netology/assets/116494871/be355ad7-5bd9-410e-9dfc-aec5480a4269)
