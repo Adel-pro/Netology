@@ -10,18 +10,19 @@
 ## Задача 1.
   1. Скопировал из демонстрации remote-модули для двух ВМ, заменил хардкод, добавил labels "project: marketing" и "project: analytics" для отличия двух машин. Создал файл cloud-init.yml, куда добавил данные для подключения к ВМ через ssh. Для передачи ssh-ключа использовал функцию template_file.
   2. Добавил в файл cloud-init.yml установку nginx. Проинциализировал и запустил проект командами "terraform init" и "terraform apply" соответственно.
-  3. Подключился к ВМ через ssh и убедился, что nginx установился командой "sudo nginx -t".
+  3. Подключился к ВМ через ssh и убедился, что nginx установился командой "sudo nginx -t".  
    ![YC](https://github.com/Adel-pro/Netology/assets/116494871/ed47c4b3-af39-4cbb-879b-9bf85788fac2)
 
-   ![nginx](https://github.com/Adel-pro/Netology/assets/116494871/c967b4da-9e8c-45f1-abaa-7f61ad9277a9)
-     В terraform console посмотрел содержимое модуля командой "module.marketing".
+   ![nginx](https://github.com/Adel-pro/Netology/assets/116494871/c967b4da-9e8c-45f1-abaa-7f61ad9277a9)  
+     
+     В terraform console посмотрел содержимое модуля командой "module.marketing".  
    ![console](https://github.com/Adel-pro/Netology/assets/116494871/b9637d2e-cd72-468f-b13b-624f30e11b89)
 
 ## Задача 2.
   1. Для создания локального модуля vpc создал директорию с названием "vpc" и файлы "main.tf", "output.tf", "variables.tf" и "providers.tf". В файле "main.tf" создал 2 ресурса для создания сети и подсети.
   2. Передал в модуль vpc переменные с названием сети, зоны и подсеткой с маской.
-  3. Добавил в файле "output.tf" информацию о yandex_vpc_subnet. В terraform console посмотрел содержимое модуля командой "module.vpc_dev".
-     ![output](https://github.com/Adel-pro/Netology/assets/116494871/d401d12a-f1a4-4142-87e9-e1bab916b73b)
+  3. Добавил в файле "output.tf" информацию о yandex_vpc_subnet. В terraform console посмотрел содержимое модуля командой "module.vpc_dev".  
+     ![output](https://github.com/Adel-pro/Netology/assets/116494871/d401d12a-f1a4-4142-87e9-e1bab916b73b)  
   4. Заменил ресурсы yandex_vpc_network и yandex_vpc_subnet, необходимые параметры в модулях "marketing" и "analytics", а также в файле "providers.tf" строчку zone, которая была привязана к переменной, на "zone = module.vpc_dev.vpc_subnet.zone".
   5. Сгенерировал документацию к модулю командой "terraform-docs markdown ./vpc".
 
