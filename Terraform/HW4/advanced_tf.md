@@ -41,3 +41,14 @@
 
      В terraform plan значительных изменений не произошло.
      ![state8](https://github.com/Adel-pro/Netology/assets/116494871/e75d676f-46a7-4487-af6f-714bec0cdcfe)
+
+## Задача 4.
+1. Изменил модуль vpc так, что он на выходе передавал подсети, созданные во всех зонах. Для этого на выход модуля была передана переменная subnets типа list(object).
+   ![YC2](https://github.com/Adel-pro/Netology/assets/116494871/fc3b6dba-9771-420e-9581-f5932034a589)
+
+## Задача 5.
+1. Написал модуль mysql для создания кластера БД Mysql "example" в Yandex Cloud с двумя хостами (HA=true) с использованием ресурса yandex_mdb_mysql_cluster. На вход модуля передал имя кластера, необходимую информацию о сети и сведения для подключения к лк в Yandex Cloud.
+2. Написал модуль для создания базы данных и пользователя в кластере "example" при помощи ресурсов yandex_mdb_mysql_database и yandex_mdb_mysql_user. На вход модуля передал имя базы данных, имя пользователя и пароль, id кластера и сведения для подключения к лк в Yandex Cloud.
+3. Использовал оба модуля для создания кластера.
+4. Выполнил команды "terraform init", "terraform plan" и "terraform apply". Кластер создавался больше 5 минут. В итоге, остановил проект командой "terraform destroy".
+   ![cluster](https://github.com/Adel-pro/Netology/assets/116494871/6c5d642d-caaa-4adb-8afb-7de58ce846a3)
