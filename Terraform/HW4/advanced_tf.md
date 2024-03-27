@@ -11,12 +11,11 @@
   1. Скопировал из демонстрации remote-модули для двух ВМ, заменил хардкод, добавил labels "project: marketing" и "project: analytics" для отличия двух машин. Создал файл cloud-init.yml, куда добавил данные для подключения к ВМ через ssh. Для передачи ssh-ключа использовал функцию template_file.
   2. Добавил в файл cloud-init.yml установку nginx. Проинциализировал и запустил проект командами "terraform init" и "terraform apply" соответственно.
   3. Подключился к ВМ через ssh и убедился, что nginx установился командой "sudo nginx -t".  
-   ![YC](https://github.com/Adel-pro/Netology/assets/116494871/ed47c4b3-af39-4cbb-879b-9bf85788fac2)
-
-   ![nginx](https://github.com/Adel-pro/Netology/assets/116494871/c967b4da-9e8c-45f1-abaa-7f61ad9277a9)  
+     ![YC](https://github.com/Adel-pro/Netology/assets/116494871/ed47c4b3-af39-4cbb-879b-9bf85788fac2)
+     ![nginx](https://github.com/Adel-pro/Netology/assets/116494871/c967b4da-9e8c-45f1-abaa-7f61ad9277a9)  
      
-     В terraform console посмотрел содержимое модуля командой "module.marketing".  
-   ![console](https://github.com/Adel-pro/Netology/assets/116494871/b9637d2e-cd72-468f-b13b-624f30e11b89)
+     В terraform console посмотрел содержимое модуля командой "module.marketing".
+     ![console](https://github.com/Adel-pro/Netology/assets/116494871/b9637d2e-cd72-468f-b13b-624f30e11b89)
 
 ## Задача 2.
   1. Для создания локального модуля vpc создал директорию с названием "vpc" и файлы "main.tf", "output.tf", "variables.tf" и "providers.tf". В файле "main.tf" создал 2 ресурса для создания сети и подсети.
@@ -45,16 +44,15 @@
 
 ## Задача 4.
 1. Изменил модуль vpc так, что он на выходе передавал подсети, созданные во всех зонах. Для этого на выход модуля была передана переменная subnets типа list(object).
-   ![YC2](https://github.com/Adel-pro/Netology/assets/116494871/fc3b6dba-9771-420e-9581-f5932034a589)
+     ![YC2](https://github.com/Adel-pro/Netology/assets/116494871/fc3b6dba-9771-420e-9581-f5932034a589)
 
 ## Задача 5.
 1. Написал модуль mysql для создания кластера БД Mysql "example" в Yandex Cloud с двумя хостами (HA=true) с использованием ресурса yandex_mdb_mysql_cluster. На вход модуля передал имя кластера, необходимую информацию о сети и сведения для подключения к лк в Yandex Cloud.
 2. Написал модуль для создания базы данных и пользователя в кластере "example" при помощи ресурсов yandex_mdb_mysql_database и yandex_mdb_mysql_user. На вход модуля передал имя базы данных, имя пользователя и пароль, id кластера и сведения для подключения к лк в Yandex Cloud.
 3. Использовал оба модуля для создания кластера.
 4. Выполнил команды "terraform init", "terraform plan" и "terraform apply". Кластер создавался больше 5 минут. В итоге, остановил проект командой "terraform destroy".
-   ![cluster](https://github.com/Adel-pro/Netology/assets/116494871/6c5d642d-caaa-4adb-8afb-7de58ce846a3)
-
+     ![cluster](https://github.com/Adel-pro/Netology/assets/116494871/6c5d642d-caaa-4adb-8afb-7de58ce846a3)
 
 ## Задача 6.
 1. Используя пример из https://github.com/terraform-yc-modules/terraform-yc-s3, создал module "simple-bucket" размером 1 ГБ.
-   ![bucket](https://github.com/Adel-pro/Netology/assets/116494871/be355ad7-5bd9-410e-9dfc-aec5480a4269)
+     ![bucket](https://github.com/Adel-pro/Netology/assets/116494871/be355ad7-5bd9-410e-9dfc-aec5480a4269)
