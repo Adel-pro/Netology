@@ -42,4 +42,6 @@
   2. Зашифровал значение "PaSSw0rd" командой "ansible-vault encrypt_string" и добавил полученное значение в файл group_vars/all/exmp.yml.
   3. Запустил playbook командой "ansible-playbook -i inventory/prod.yml site.yml --ask-vault-pass --ask-pass", применился новый факт.  
      ![9](https://github.com/Adel-pro/Netology/assets/116494871/c0f8c6ab-dc59-4327-a18e-c9f96edbbdc7)
-  4. 
+  4. Добавил новую группу хостов fedora и переменную "fedora default fact".
+  5. Написал скрипт на bash, в котором поднимаются контейнеры с нужными образами, запускается ansible-playbook и останавливаются контейнеры.
+  6. Все файлы хранятся в Netology/Ansible/HW1.
