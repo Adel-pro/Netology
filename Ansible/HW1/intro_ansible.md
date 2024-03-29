@@ -10,7 +10,7 @@
   1. Запустил playbook site.yml с inventory-файлом test.yml командой "ansible-playbook -i inventory/test.yml site.yml". Значение some_fact равен 12.  
      ![1](https://github.com/Adel-pro/Netology/assets/116494871/dfdfa2dc-9547-405a-9991-a34347124a29)
   2. Значение, равное 12, было зафиксировано в файле example.yml. Поменял это значение на "all default fact".
-  3. В docker поднял 2 операционки с образами centos:7 и ubuntu:latest и названием centos7 и ubuntu соответственно. Для этого использовал команды:
+  3. В docker поднял 2 операционки с образами centos:7 и ubuntu:latest и названием centos7 и ubuntu соответственно. Для этого использовал команды:  
      docker run --name centos7 -it centos:7 bash  
      docker run --name ubuntu -it ubuntu bash
      ![2](https://github.com/Adel-pro/Netology/assets/116494871/e1c31c16-f576-4491-a2a0-5d03de246846)
@@ -21,8 +21,8 @@
   5. В group_vars поменял значение для deb — "deb default fact", для el — "el default fact".
   6. Повторно запустил команду "ansible-playbook -i inventory/prod.yml site.yml", все работает.  
      ![5](https://github.com/Adel-pro/Netology/assets/116494871/8828862c-2f5b-481c-bb95-25321df76568)
-  7. Используя ansible-vault, зашифровал факты в group_vars/deb и group_vars/el с паролем netology командами:
-     ansible-vault encrypt group_vars/deb/examp.yml
+  7. Используя ansible-vault, зашифровал факты в group_vars/deb и group_vars/el с паролем netology командами:  
+     ansible-vault encrypt group_vars/deb/examp.yml  
      ansible-vault encrypt group_vars/el/examp.yml
   8. Запустил команду "ansible-playbook -i inventory/prod.yml site.yml --ask-vault-pass", работает.  
      ![6](https://github.com/Adel-pro/Netology/assets/116494871/bf87dd07-90bf-4e67-8756-2b1b06217498)
@@ -33,7 +33,7 @@
           hosts:  
             localhost:  
               ansible_connection: ssh  
-  11. Запустил playbook командой "ansible-playbook -i inventory/prod.yml site.yml --ask-vault-pass --ask-pass"
+  11. Запустил playbook командой "ansible-playbook -i inventory/prod.yml site.yml --ask-vault-pass --ask-pass".
       ![8](https://github.com/Adel-pro/Netology/assets/116494871/67d4b185-754e-45ae-91d6-a48e95e4b839)
   12. Сохранил код в репозитории с описанием intro_ansible.md. 
 
