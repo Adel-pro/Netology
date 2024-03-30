@@ -10,7 +10,7 @@
 ## Основная часть.
   1. Добавил в inventory-файл prod.yml публичные айпишники ВМ для ClickHouse и Vector.
   2. В playbook site.yml поправил хосты в соответствии с prod.yml, нашел установку и настройку vector (https://github.com/dzervas/ansible-vector/tree/master), адаптировал код для наших задач.
-  3. При создании tasks из рукомендованных использовал модули get_url и template.
+  3. При создании tasks из рекомендованных использовал модули get_url и template.
   4. Согласно tasks, скачался deb-пакет с указанной версией, установился вектор, скопировался конфиг из template и указал этот конфиг для vector, дополнены параметры systemd и дополнительные параметры привилегий, а также был поднят демон vector.
   5. Запустил команду "ansible-lint site.yml", не ругался.  
      ![5](https://github.com/Adel-pro/Netology/assets/116494871/6357e179-6c9a-4890-88a5-8b8c575c9261)
