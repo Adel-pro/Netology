@@ -1,0 +1,112 @@
+---
+- name: Install Clickhouse
+  hosts: clickhouse
+  handlers:
+    - name: Start clickhouse service
+      become: true
+      ansible.builtin.service:
+        name: clickhouse-server
+        state: restarted
+  tasks:
+    - block:
+        - name: Get clickhouse distrib
+          ansible.builtin.get_url:
+            url: "https://packages.clickhouse.com/rpm/stable/{{ item }}-{{ clickhouse_version }}.noarch.rpm"
+            dest: "./{{ item }}-{{ clickhouse_version }}.rpm"
+          with_items: "{{ clickhouse_packages }}"
+      rescue:
+        - name: Get clickhouse distrib
+          ansible.builtin.get_url:
+            url: "https://packages.clickhouse.com/rpm/stable/clickhouse-common-static-{{ clickhouse_version }}.x86_64.rpm"
+            dest: "./clickhouse-common-static-{{ clickhouse_version }}.rpm"
+    - name: Install clickhouse packages
+      become: true
+      ansible.builtin.yum:
+        name:
+          - clickhouse-common-static-{{ clickhouse_version }}.rpm
+          - clickhouse-client-{{ clickhouse_version }}.rpm
+          - clickhouse-server-{{ clickhouse_version }}.rpm
+      notify: Start clickhouse service
+    - name: Flush handlers
+      meta: flush_handlers
+    - name: Create database
+      ansible.builtin.command: "clickhouse-client -q 'create database logs;'"
+      register: create_db
+      failed_when: create_db.rc != 0 and create_db.rc !=82
+      changed_when: create_db.rc == 0
+  vars_files:
+    - group_vars/clickhouse/vars.yml
+
+- name: Install Vector
+  hosts: vector
+  handlers:
+    - name: Start vector service
+      become: true
+      ansible.builtin.service:
+        name: vector
+        state: restarted
+  tasks:
+    - name: Get Vector (Debian)
+      ansible.builtin.get_url:
+        url: "https://packages.timber.io/vector/{{ version }}/vector_{{ version }}-1_{{ arch }}.deb"
+        dest: "./vector-{{ version }}.deb"
+    # - name: Install Vector
+    #   become: true
+    #   ansible.builtin.apt:
+    #     name: vector-{{ version }}.deb
+    #   notify: Start vector service
+    #   when: ansible_os_family == 'Debian'
+    - name: Install Vector
+      become: true
+      apt:
+        deb: vector-{{ version }}.deb
+      notify: Start vector service
+      when: ansible_os_family == 'Debian'
+
+    - name: Copy config
+      become: true
+      template:
+        src: "{{ vector_template }}"
+        dest: "{{ vector_config_file }}"
+        mode: 0644
+      notify: Start vector service
+
+    - name: Use the right config_file
+      become: true
+      lineinfile:
+        path: /etc/default/vector
+        line: "VECTOR_CONFIG={{ vector_config_file }}"
+        state: present
+
+    - name: Systemd config
+      become: true
+      template:
+        src: "{{ vector_service_template }}"
+        dest: "{{ vector_service_config_file }}"
+        mode: 0644
+      # notify: Start vector service    
+
+    - name: Add vector user to docker group
+      user:
+        name: vector
+        groups: docker
+        append: yes
+      when: add_vector_docker_group | default(no)
+      notify: Start vector service
+
+    - name: Add vector user to systemd-journal group
+      user:
+        name: vector
+        groups: systemd-journal
+        append: yes
+      when: add_vector_journal_group | default(no)
+      notify: Start vector service
+
+    - name: Start Vector
+      become: true
+      service:
+        state: started
+        enabled: yes
+        name: vector
+  vars_files:
+    - group_vars/vector/vars.yml
