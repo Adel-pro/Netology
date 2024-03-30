@@ -84,7 +84,7 @@
         src: "{{ vector_service_template }}"
         dest: "{{ vector_service_config_file }}"
         mode: 0644
-      # notify: Start vector service    
+      notify: Start vector service    
 
     - name: Add vector user to docker group
       user:
