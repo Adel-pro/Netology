@@ -1,0 +1,27 @@
+---
+version: 0.34.2
+arch: amd64
+vector_template: templates/vector.j2
+vector_config_file: /etc/vector/vector.toml
+vector_service_template: templates/vector.service.j2
+vector_service_config_file: /usr/lib/systemd/system/vector.service
+vector_nightly: no
+vector_version: "{{ vector_nightly | ternary('nightly','latest') }}"
+add_vector_docker_group: no # Add vector user to "docker" group
+add_vector_journal_group: no # Add vector user to "systemd-journal" group
+
+sources:
+  demo_logs:
+    type: demo_logs
+    format: syslog
+sinks:
+  to_clickhouse:
+    type: clickhouse
+    inputs:
+      - demo_logs
+    database: logs
+    endpoint: http://158.160.9.79:8123
+    table: vector_table
+    compression: gzip
+    healthcheck: true
+    skip_unknown_fields: true
