@@ -2,7 +2,7 @@
 # Домашнее задание к занятию 3 «Использование Ansible»
 
 ## Подготовка к выполнению
-  1. Подготовил в Yandex Cloud три хоста: для clickhouse, для vector и для lighthouse.
+  1. Подготовил в Yandex Cloud три хоста: для clickhouse, vector и lighthouse.
      ![5](https://github.com/Adel-pro/Netology/assets/116494871/5800a501-8ba1-4adc-a9d5-b29e711016af)
   2. Ознакомился с репозиторием LightHouse.    
       
