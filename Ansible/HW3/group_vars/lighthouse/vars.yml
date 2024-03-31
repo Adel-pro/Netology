@@ -1,0 +1,8 @@
+---
+lighthouse_url: https://github.com/VKCOM/lighthouse.git
+lighthouse_dir: /etc/lighthouse
+nginx_config_file: /etc/nginx/nginx.conf
+lighthouse_config_file: /etc/nginx/conf.d/lighthouse.conf
+user: root
+nginx_template: templates/nginx.conf.j2
+lighthouse_template: templates/lighthouse.conf.j2
