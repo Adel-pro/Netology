@@ -14,7 +14,7 @@
   5. Шаблоны конфигов добавил в директорию templates.
   6. Описал роли и их параметры в файлах README.md.
   7. Перепроверил и убедился в правильности разнесенных команд и файлов.
-  8. Выложил роль "vector-role" в репозиторий командами:
+  8. Выложил роль "vector-role" в репозиторий командами:  
      git init  
      git remote add origin git@github.com:Adel-pro/vector-role.git  
      git add .  
