@@ -22,7 +22,7 @@
      ![7](https://github.com/Adel-pro/Netology/assets/116494871/5742bfa7-95a2-48f3-8582-9db74c68fac3)  
      Отработал playbook на ВМ, все работает, vector.service существует и запущен. Запустил контейнер с образом, проделал те же самые операции, только вручную, все работает:  
      ![5](https://github.com/Adel-pro/Netology/assets/116494871/a373eb71-cec7-42b5-a967-fb3c30810df3)  
-     Полная отработка команды "molecule test":
+     Полная отработка команды "molecule test":  
       INFO     default scenario test matrix: dependency, lint, cleanup, destroy, syntax, create, prepare, converge, idempotence, side_effect, verify, cleanup, destroy  
       INFO     Performing prerun with role_name_check=0...  
       INFO     Set ANSIBLE_LIBRARY=/home/test/.cache/ansible-compat/f5bcd7/modules:/home/test/.ansible/plugins/modules:/usr/share/ansible/plugins/modules  
@@ -216,4 +216,4 @@
   5. Также, облегчил сценарий, уменьшив количество сценариев с 4х до 2х в файле tox.ini, включив только следующие сценарии:  
      ![9](https://github.com/Adel-pro/Netology/assets/116494871/abe117ae-72da-4591-8089-c5899f0fcf34)
   6. Выполнил команду "tox", убедился, что все отрабатывает.
-  7. Добавил новый тег на коммит в репозитории https://github.com/Adel-pro/lighthouse-role.
+  7. Добавил новый тег на коммит в репозитории https://github.com/Adel-pro/vector-role.
