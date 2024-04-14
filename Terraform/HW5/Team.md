@@ -138,3 +138,42 @@
   3. Создал pull request 'terraform-hotfix' --> 'terraform-05'.
   4. Вставил в комментарий результат проверок tflint и checkov, а также вывод команды "terraform plan".
   5. Ссылка на PR: https://github.com/Adel-pro/Netology/pull/1/commits/ef45154826b6e360a2d6c2b2712a6c3af62a6f2b
+
+## Задание 4
+  1. Написал переменную с type=string в terraform console.  
+     ![11](https://github.com/Adel-pro/Netology/assets/116494871/290ecdf9-6823-42a0-93ca-fcb4d7a2c787)  
+     Написал переменную с type=list(string) в terraform console. Полностью выражение для regex написать не удалось, только через цикл.  
+     ![12](https://github.com/Adel-pro/Netology/assets/116494871/cdae874e-0df2-43a7-ac3a-f4e5604ec3ae)
+
+## Задание 5
+  1. Написал переменные с валидацией с type=string и type=object.  
+      variable "in_the_end_there_can_be_only_string" {  
+        description = "Who is better Connor or Duncan?"  
+        type        = string  
+      
+        # default = "Who is better Connor or Duncan?"  
+        default = "who is better connor or duncan?"  
+      
+        validation {  
+          error_message = "There can be only one MacLeod"  
+          condition     = can(regex("^[^A-Z]+$", var.in_the_end_there_can_be_only_string))  
+        }  
+      }  
+      
+      variable "in_the_end_there_can_be_only_object" {  
+        description = "Who is better Connor or Duncan?"  
+        type = object({  
+          Dunkan = optional(bool)  
+          Connor = optional(bool)  
+        })  
+      
+        default = {  
+          Dunkan = true  
+          Connor = false  
+        }
+      
+        validation {  
+          error_message = "There can be only one MacLeod"  
+          condition     = (var.in_the_end_there_can_be_only_object.Dunkan == true && var.in_the_end_there_can_be_only_object.Connor == false) || (var.in_the_end_there_can_be_only_object.Dunkan == false && var.in_the_end_there_can_be_only_object.Connor == true)  
+        }  
+      }  
