@@ -19,8 +19,8 @@
      ![1](https://github.com/Adel-pro/Netology/assets/116494871/b98a9a28-98c8-4188-9620-0333ec2405a5)
   5. Написал playbook site.yml и использовал в нем модуль.  
      ![3](https://github.com/Adel-pro/Netology/assets/116494871/ef5b6289-87e3-4e8a-9637-549c5a12750d)
-  6. Проверил playbook на идемпотентность.  
-     Сам файл не меняется, но добиться того, чтобы в результате ansible выдавал, что ничего не изменилось, не смог. 
+  6. Проверил playbook на идемпотентность. Не с 1го раза, но все заработало.  
+     ![9](https://github.com/Adel-pro/Netology/assets/116494871/7b4abc8e-d941-4174-b722-1abb1ba4de02)
   7. Вышел из виртуального окружения.
   8. Создал новую колллекцию командой "ansible-galaxy collection init netology.yandex_cloud_elk".  
      ![6](https://github.com/Adel-pro/Netology/assets/116494871/b9093b92-d271-42f4-b60b-ab0175f6396a)
