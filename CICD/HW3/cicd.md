@@ -5,7 +5,7 @@
   1. Создал 2 ВМ в Yandex Cloud с параметрами: 2CPU 4RAM Centos7.   
   2. Прописал в inventory-файл созданные хосты.
   3. Добавил в files файл со своим публичным ключом (id_rsa.pub).
-  4. Запустил playbook, отработал успешно.
+  4. Запустил playbook, отработал с ошибками. Поменял версию postgres на 12 в файле переменных и playbook, отработал успешно.
   5. Проверил доступность SonarQube через http://84.252.130.230:9000.
   6. Зашел под admin\admin и поменял пароль.
   7. Проверил доступность Nexus через http://158.160.116.227:8081.
@@ -55,19 +55,19 @@
      - sudo apt install default-jre  
      - sudo apt install default-jdk  
      - java -version  
-     Прописал переменную JAVA_HOME в файл с переменными среды командами:  
+  Прописал переменную JAVA_HOME в файл с переменными среды командами:  
      - update-alternatives --config java  
      - sudo nano /etc/environment  
      - JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64/bin/java"  
      - source /etc/environment  
      - echo $JAVA_HOME  
-     Проверил версию командой "mvn --version".  
-     ![5](https://github.com/Adel-pro/Netology/assets/116494871/fafc492e-329a-4482-9cf6-1e907157c4b0)
+  Проверил версию командой "mvn --version".  
+  ![5](https://github.com/Adel-pro/Netology/assets/116494871/fafc492e-329a-4482-9cf6-1e907157c4b0)
   5. Зашел в директорию с файлом pom.xml.
      
 ## Основная часть
   1. Поменял в pom.xml блок с зависимостями под нужный артефакт с версией 8_282.
   2. Запустил команду "mvn package", отработало успешно.
-  3. Проверил директорию ~/.m2/repository/ и нашел артефакт с названием "netology".  
+  3. Проверил директорию ~/.m2/repository/ и нашел артефакт с названием "netology".   
      ![7](https://github.com/Adel-pro/Netology/assets/116494871/7e20bac0-02ee-4019-b321-4c9f9b1abbe0)
   4. Файл pom.xml расположен в Netology/CICD/HW2.
