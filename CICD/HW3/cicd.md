@@ -54,13 +54,13 @@
      - sudo apt update  
      - sudo apt install default-jre  
      - sudo apt install default-jdk  
-     - java -version
+     - java -version  
      Прописал переменную JAVA_HOME в файл с переменными среды командами:  
      - update-alternatives --config java  
      - sudo nano /etc/environment  
      - JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64/bin/java"  
      - source /etc/environment  
-     - echo $JAVA_HOME
+     - echo $JAVA_HOME  
      Проверил версию командой "mvn --version".  
 ![5](https://github.com/Adel-pro/Netology/assets/116494871/fafc492e-329a-4482-9cf6-1e907157c4b0)
   5. Зашел в директорию с файлом pom.xml.
