@@ -1,0 +1,22 @@
+node("linux"){
+    stage("Git checkout"){
+        git branch: 'main', credentialsId: '9601da1a-b5be-46d6-bf1c-194f3647572b', url: 'git@github.com:Adel-pro/vector-role.git'
+    }
+    stage("Sample define secret_check"){
+        secret_check=true
+    }
+    stage("Run playbook"){
+        if (secret_check){
+            if (prod_run){
+                sh 'ansible-playbook site.yml -i inventory/prod.yml'
+            }
+            else{
+                sh 'ansible-playbook site.yml --check --diff -i inventory/prod.yml'
+            }
+        }
+        else{
+            echo 'need more action'
+        }
+        
+    }
+}
