@@ -38,4 +38,9 @@
      - Zabbix - гибридная модель
      - VictoriaMetrics - гибридная модель
      - Nagios - push-модель
-  7. 
+  7. Склонировал репозиторий, запустил TICK-стэк, используя docker-compose. Были проблемы с запуском контейнеров, выставил права 777 на директории telegraf/, kapacitor/ и chronograf/, выставил :Z ко всем volumes, заработало.  
+     ![1](https://github.com/Adel-pro/Netology/assets/116494871/74936885-2f48-4c69-99c1-8f7ccebb22ac)
+  8. В веб-интерфейсе Chronograf создал график usage_system в поле cpu.  
+     ![2](https://github.com/Adel-pro/Netology/assets/116494871/b40b91f3-9c3f-4cfe-bb35-7b63adfb16c2)
+  9. Добавил плагин docker в конфигурацию telegraf.  
+     ![3](https://github.com/Adel-pro/Netology/assets/116494871/f1e9c06f-12d3-4099-9924-009cf6ede4a9)
