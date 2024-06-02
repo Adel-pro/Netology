@@ -23,8 +23,10 @@
      ![6](https://github.com/Adel-pro/Netology/assets/116494871/a532ee5b-741b-4577-a34a-d1cbce84b24a)
   3. Снова сгенерировал событие, нажав "Create a sample event".
   4-5. Пришло оповещение на почту.  
-     
-  6. Дополнительно настроил alert, когда проблема переходит из состояния "Resolved" в состояние "Unresolved" и alert, когда проблема приходит в проекте "netology".  
+     ![image](https://github.com/Adel-pro/Netology/assets/116494871/c655cb54-a568-43a5-b48a-3e9888d372a7)
+  6. Дополнительно настроил alert, когда проблема переходит из состояния "Resolved" в состояние "Unresolved" и если она находится в проекте "netology".  
      ![7](https://github.com/Adel-pro/Netology/assets/116494871/8f9c281c-7b37-41f9-9559-ce7da18d3e35)  
-     2й alert пришел сразу же:  
-     1й alert через  
+     Alert пришел сразу же:  
+     ![image](https://github.com/Adel-pro/Netology/assets/116494871/0b09b7be-bb22-486b-9625-d96622f58633)  
+     Также, настроил alert, когда проблема переходит из состояния "Resolved" в состояние "Unresolved" и продолжается больше 5 минут:  
+     ![image](https://github.com/Adel-pro/Netology/assets/116494871/e44a68e9-b059-48fc-8747-97b1cd0db56a)
