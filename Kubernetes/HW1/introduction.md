@@ -4,8 +4,8 @@
 ## Задание 1. Установка MicroK8S
   1. Установил MicroK8S на локальную машину  
      ![1](https://github.com/Adel-pro/Netology/assets/116494871/7cbbe93e-09f0-4a7c-9890-7cade07a1254)  
-     Конфиг MicroK8S находился в файле "/var/snap/microk8s/current/credentials/client.config". ИСпользовал команду "sudo microk8s config > ~/.kube/config" для перемещения конфига в привычную директорию.
-  2. Запустил команду "microk8s status --wait-ready" и увидел статус MicroK8S  
+     Конфиг MicroK8S находился в файле "/var/snap/microk8s/current/credentials/client.config". Использовал команду "sudo microk8s config > ~/.kube/config" для перемещения конфига в привычную директорию.
+  2. Запустил команду "microk8s status --wait-ready", увидел статус MicroK8S, доступные и подключенные addons.   
      ![2](https://github.com/Adel-pro/Netology/assets/116494871/8fb4fe95-2e76-4f8e-95a3-e44bc286160a)  
      Установил dashboard  
      ![11](https://github.com/Adel-pro/Netology/assets/116494871/236df483-865e-45cc-80b6-abc5bccab22c)
