@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: net-busybox
+  labels:
+    test: ng_busy
+spec:
+  selector:
+    matchLabels:
+      test: ng_busy
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        test: ng_busy
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
+      initContainers:
+      - name: busybox
+        image: busybox
+        # command: ['sh', '-c', "export loop=0; until [ $loop -eq 1 ]; do kubectl get service | grep net-busybox-svc; if [[ $? -eq 0 ]]; then loop=1; fi; sleep 2; done"]
+        command: ['sh', '-c', "until nslookup net-busybox-svc.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for net-busybox-svc; sleep 2; done"]

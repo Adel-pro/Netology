@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: net-busybox-svc
+spec:
+  selector:
+    test: ng_busy
+  ports:
+  - name: nginx-busy
+    port: 80
+    
