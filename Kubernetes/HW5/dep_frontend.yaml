@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: frontend
+  labels:
+    app: ng_mul
+spec:
+  selector:
+    matchLabels:
+      app: ng_mul
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: ng_mul
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
