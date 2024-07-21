@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: net-dem
+  labels:
+    app: mul
+spec:
+  selector:
+    matchLabels: 
+      app: mul
+  template:
+    metadata:
+      labels:
+        app: mul
+    spec:
+      containers:
+      - name: multitool
+        image: wbitt/network-multitool
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: log-dir
+          mountPath: /var/log/syslog
+          subPath: syslog
+          readOnly: true
+      volumes:
+      - name: log-dir
+        hostPath: 
+          path: /var/log

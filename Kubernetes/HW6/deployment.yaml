@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: net-dep
+  labels:
+    app: bus_mul
+spec:
+  selector:
+    matchLabels: 
+      app: bus_mul
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: bus_mul
+    spec:
+      containers:
+      - name: busybox
+        image: busybox
+        command: ['sh', '-c', 'while true; do date >> /output/result.txt; sleep 5; done']
+        volumeMounts:
+        - name: shared-dir
+          mountPath: /output
+      - name: multitool
+        image: wbitt/network-multitool
+        ports:
+        - containerPort: 8080
+        env:
+        - name: HTTP_PORT
+          value: "1180"  
+        command: ['sh', '-c', 'while true; do tail /input/result.txt -n 1; sleep 5; done']
+        volumeMounts:
+        - name: shared-dir
+          mountPath: /input
+      volumes:
+      - name: shared-dir
+        hostPath: 
+          path: /tmp
