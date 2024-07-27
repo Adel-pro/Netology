@@ -19,7 +19,7 @@
      ![8](https://github.com/user-attachments/assets/a6c5012d-b900-4c08-9197-aac966029fda)  
      Создал и применил Deployment с nginx:  
      ![9](https://github.com/user-attachments/assets/8f7dc1ff-cf2b-400b-8376-e87e2f1e7cdf)  
-  4. Для проверки прав для пользователя user переключился в нужный контекст и проверил, доступны ли user просматривать логи:  
+  4. Для проверки прав для пользователя user переключился в нужный контекст и проверил, доступно ли user просматривать логи:  
      ![10](https://github.com/user-attachments/assets/7366a4e4-40d5-46b0-a2ee-61ca59baf1c6)  
      Также проверил, доступен ли пользователю user просмотр конфигурации пода:  
      ![11](https://github.com/user-attachments/assets/ed847ec8-f5b5-49f5-9762-c18f5a32c4fd)  
