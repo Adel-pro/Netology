@@ -4,9 +4,9 @@
 ## Задание 1. Создать Deployment приложения и решить возникшую проблему с помощью ConfigMap. Добавить веб-страницу
   1. Создал Deployment приложения, состоящего из контейнеров nginx и multitool.
   2. Возникла проблема с портом, создал ConfigMap.
-  3. Применил Deployment и ConfigMap:  
+  3. Применил ConfigMap и Deployment:
+     ![2](https://github.com/user-attachments/assets/315da38d-6d8c-4005-9c21-ebf772c4e7a8)  
      ![1](https://github.com/user-attachments/assets/269ba03d-11d8-4b07-b267-842418cfdf88)  
-     ![2](https://github.com/user-attachments/assets/315da38d-6d8c-4005-9c21-ebf772c4e7a8)
   4. Сделал простую веб-страницу и подключил её к Nginx с помощью ConfigMap.  
      Создал и подключил Service:  
      ![3](https://github.com/user-attachments/assets/23dd2e72-47d0-4679-a701-a35b995cef9a)  
