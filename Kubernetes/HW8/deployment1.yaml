@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: netology
+  labels:
+    app: ng_mul
+spec:
+  selector:
+    matchLabels:
+      app: ng_mul
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ng_mul
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: html-file
+          mountPath: /usr/share/nginx/html/
+      - name: multitool
+        image: wbitt/network-multitool
+        ports:
+        - containerPort: 8080
+        env:
+        - name: HTTP_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: my-configmap
+              key: HTTP_PORT
+      volumes:
+      - name: html-file
+        configMap:
+          name: my-configmap
