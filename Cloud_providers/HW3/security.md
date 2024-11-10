@@ -7,7 +7,7 @@
      Проверил работоспособность ключа, открыв изображение в браузере:  
      ![2](https://github.com/user-attachments/assets/0569e892-e80f-42f5-a7ff-1a1e606e49af)  
   2. Создал бакет, назвал его так же, как домен и загрузил в него файл со статической страницей:  
-     ![4](https://github.com/user-attachments/assets/38e233c4-a6f0-478d-8525-15786eaa2e5d)  
+     ![4](https://github.com/user-attachments/assets/98ac721a-99a3-4f3f-8b98-d541ee6b5366)  
      Зашел в настройки бакета во вкладку веб-сайт, настроил хостинг и создал тип ANAME в записях DNS:  
      ![7](https://github.com/user-attachments/assets/b7bb9c57-d217-4814-a011-813b41087f6d)  
      Cоздал зону DNS и ресурсную запись средствами Cloud DNS:  
