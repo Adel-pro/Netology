@@ -14,7 +14,5 @@
      ![3](https://github.com/user-attachments/assets/46e7f526-0052-4619-84ba-60fe9492b685)  
      Создал сертификат Let's Encrypt:  
      ![5](https://github.com/user-attachments/assets/326d8868-c540-4dda-96b7-ba3f850ff5b8)  
-     Создал TXT-запись для прохождения процедуры проверки прав на домен:  
-     ![6](https://github.com/user-attachments/assets/e9877910-fde0-499b-a508-9235570128a4)   
-     Итого, в зоне DNS следующие записи:  
+     Создал TXT-запись для прохождения процедуры проверки прав на домен:   
      ![8](https://github.com/user-attachments/assets/3bfd5532-af28-4390-bd21-775cb0b8ef5d)  
