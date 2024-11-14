@@ -16,3 +16,5 @@
      ![5](https://github.com/user-attachments/assets/326d8868-c540-4dda-96b7-ba3f850ff5b8)  
      Создал TXT-запись для прохождения процедуры проверки прав на домен:   
      ![8](https://github.com/user-attachments/assets/3bfd5532-af28-4390-bd21-775cb0b8ef5d)  
+     К сожалению, сертификат остался в статусе "validating", картинка доступна:
+     ![9](https://github.com/user-attachments/assets/1437d777-66a9-4c6e-b43e-e74ab6137940)
