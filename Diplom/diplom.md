@@ -49,7 +49,7 @@
 
    2. Ввел команды:
 
-      terraform init
+      terraform init  
       terraform plan  
       terraform apply  
       terraform output s3_access_key  
