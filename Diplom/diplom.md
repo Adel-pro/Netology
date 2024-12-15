@@ -429,8 +429,10 @@
        ```
 
    12. Склонировал репозиторий kubespray командой 
-   
+
+       ```
        git clone https://github.com/kubernetes-sigs/kubespray.git
+       ```
 
    13. Запустил terraform apply. После корректировки конфигов, изменения несоответствия и скачивания дополнительных модулей, kubespray поднялся:  
        ![6](https://github.com/user-attachments/assets/a7dfd565-d92c-4e34-a448-d175e4c408f7)  
@@ -613,7 +615,7 @@
 	
 	  members = [
 	    "system:allUsers",
-
+	
 	  ]
       }
 
@@ -625,7 +627,6 @@
 	    "system:allUsers",
 	  ]
       }
-
       ```
 
    7. Создал необходимый тег для образа:  
