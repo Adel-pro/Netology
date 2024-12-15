@@ -405,13 +405,13 @@
 	     yandex_compute_instance.nat-instance,
        ]
 
-	  content = templatefile("${path.module}/hosts.tftpl",
+          content = templatefile("${path.module}/hosts.tftpl",
 
-	     { masters      = yandex_compute_instance.masters[*],
+             { masters      = yandex_compute_instance.masters[*],
                 slaves       = yandex_compute_instance.slaves[*],
                 nat_instance = yandex_compute_instance.nat-instance,
              }
-             )
+          )
           filename = "${abspath(path.module)}/../ansible/hosts.yml"
        }
 
