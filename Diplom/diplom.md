@@ -403,7 +403,7 @@
 	     yandex_compute_instance.masters,
 	     yandex_compute_instance.slaves,
 	     yandex_compute_instance.nat-instance,
-	  ]
+       ]
 
 	  content = templatefile("${path.module}/hosts.tftpl",
 
