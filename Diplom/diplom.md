@@ -399,7 +399,7 @@
 
        ```
        resource "local_file" "hosts_templatefile" {
-	  depends_on = [
+          depends_on = [
 	     yandex_compute_instance.masters,
 	     yandex_compute_instance.slaves,
 	     yandex_compute_instance.nat-instance,
@@ -610,22 +610,22 @@
       }
 
       resource "yandex_container_registry_iam_binding" "puller" {
-	  registry_id = yandex_container_registry.my-reg.id
-	  role        = "container-registry.images.pusher"
+          registry_id = yandex_container_registry.my-reg.id
+          role        = "container-registry.images.pusher"
 	
-	  members = [
-	    "system:allUsers",
+          members = [
+            "system:allUsers",
 	
-	  ]
+          ]
       }
 
       resource "yandex_container_registry_iam_binding" "pusher" {
-	  registry_id = yandex_container_registry.my-reg.id
-	  role        = "container-registry.images.puller"
+          registry_id = yandex_container_registry.my-reg.id
+          role        = "container-registry.images.puller"
 	
-	  members = [
-	    "system:allUsers",
-	  ]
+          members = [
+            "system:allUsers",
+          ]
       }
       ```
 
@@ -1058,10 +1058,10 @@
 
    5. Также, во избежании ошибки доступа к кластеру по 6443 порту без сертификата использовал в кластере команду:
 
-   ```
-   kubectl create clusterrolebinding cluster-system-anonymous --clusterrole=cluster-admin --user=system:anonymous
-   ```
-   ![21](https://github.com/user-attachments/assets/1b10bb2b-44d6-43a0-9ba7-7362964819c8)
+      ```
+      kubectl create clusterrolebinding cluster-system-anonymous --clusterrole=cluster-admin --user=system:anonymous
+      ```
+      ![21](https://github.com/user-attachments/assets/1b10bb2b-44d6-43a0-9ba7-7362964819c8)
 
    6. Проделал первоначальную установку Jenkins:
       ![16](https://github.com/user-attachments/assets/f833b9ec-ee7b-446c-b200-5e50b2d5a167)
@@ -1076,66 +1076,62 @@
 
    10. Создал job, в котором указал источник git, и pipeline:
 
-      ```
-      pipeline {
-         agent any  
+       ```
+       pipeline {
+          agent any  
 
-         environment {
-            CONTAINER_REGISTRY = 'cr.yandex/crpgfloaqiho2c5h1t9c/nginx'
-         }
+          environment {
+             CONTAINER_REGISTRY = 'cr.yandex/crpgfloaqiho2c5h1t9c/nginx'
+          }
 
-         stages {
-            stage('Checkout') {
-                  steps {
-                     // Получение кода из GitHub
-                     git branch: 'main', url: 'https://github.com/Adel-pro/netology-diplom-app.git'
-                  }
-            }
+          stages {
+             stage('Checkout') {
+                   steps {
+                      git branch: 'main', url: 'https://github.com/Adel-pro/netology-diplom-app.git'
+                   }
+             }
             
-            stage('Build Docker Image') {
-                  steps {
-                     script {
-                        // Получение текущего тега, если есть
-                        def tag = env.GIT_TAG_NAME ?: 'latest'
-                        // Сборка Docker-образа
-                        sh "docker build -t ${CONTAINER_REGISTRY}:${tag} ."
-                     }
-                  }
-            }
+             stage('Build Docker Image') {
+                   steps {
+                      script {
+                         def tag = env.GIT_TAG_NAME ?: 'latest'
+                         sh "docker build -t ${CONTAINER_REGISTRY}:${tag} ."
+                      }
+                   }
+             }
             
-            stage('Push to Container Registry') {
-               steps {
-                     script {
-                        def tag = env.GIT_TAG_NAME ?: 'latest'
-                        sh "docker push ${CONTAINER_REGISTRY}:${tag}"
-                     }
-                  }
-            }
+             stage('Push to Container Registry') {
+                   steps {
+                      script {
+                         def tag = env.GIT_TAG_NAME ?: 'latest'
+                         sh "docker push ${CONTAINER_REGISTRY}:${tag}"
+                      }
+                   }
+             }
             
-            stage('Deploy to Kubernetes') {
-                  steps {
-                     script {
-                        def tag = env.GIT_TAG_NAME ?: 'latest'
-                        // Применение конфигурации деплоя в Kubernetes
-                        sh """
-                        kubectl set image deployment/myapp-nginx nginx=${CONTAINER_REGISTRY}:${tag}
-                        kubectl rollout status deployment/myapp-nginx
-                        """
-                     }
-                  }
-            }   
-         }
+             stage('Deploy to Kubernetes') {
+                   steps {
+                      script {
+                         def tag = env.GIT_TAG_NAME ?: 'latest'
+                         sh """
+                         kubectl set image deployment/myapp-nginx nginx=${CONTAINER_REGISTRY}:${tag}
+                         kubectl rollout status deployment/myapp-nginx
+                         """
+                      }
+                   }
+             }   
+          }
 
-         post {
-            success {
-                  echo 'Pipeline completed successfully!'
-            }
-            failure {
-                  echo 'Pipeline failed!'
-            }
-         }
-      }
-      ```
+          post {
+             success {
+                   echo 'Pipeline completed successfully!'
+             }
+             failure {
+                   echo 'Pipeline failed!'
+             }
+          }
+       }
+       ```
 
    11. Проверил доступность приложения:  
        ![20](https://github.com/user-attachments/assets/10c3ccc6-887f-4dc2-9799-f120b236737b)
