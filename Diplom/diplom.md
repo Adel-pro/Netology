@@ -400,10 +400,10 @@
        ```
        resource "local_file" "hosts_templatefile" {
           depends_on = [
-	     yandex_compute_instance.masters,
-	     yandex_compute_instance.slaves,
-	     yandex_compute_instance.nat-instance,
-       ]
+             yandex_compute_instance.masters,
+             yandex_compute_instance.slaves,
+             yandex_compute_instance.nat-instance,
+          ]
 
           content = templatefile("${path.module}/hosts.tftpl",
 
