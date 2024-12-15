@@ -920,7 +920,7 @@
       git clone https://github.com/scriptcamp/kubernetes-jenkins
       ```
 
-   2. Адаптировал конфиги, добавив в deployment дополнительные volumeMounts и volumes для работы docker в jenkins. Также, в файл с pre-config.yml добавляю установку docker на хостах кластера.
+   2. Адаптировал конфиги, добавив в deployment дополнительные volumeMounts и volumes для работы docker в jenkins. Также, в файл с post-config.yml добавляю установку docker на хостах кластера.
 
       ```
       - name: Update apt cache
