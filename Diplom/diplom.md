@@ -76,10 +76,10 @@
       ```
 
       Подставил значения в access_key и secret_key, которые получил через terraform output. Ввел terraform init:  
-      ![1](https://github.com/user-attachments/assets/2a383a44-b451-473c-9ca4-896f825148cb)
+      ![1](https://github.com/user-attachments/assets/2a383a44-b451-473c-9ca4-896f825148cb)  
 
       Terraform.tfstate записался в bucket:  
-      ![2](https://github.com/user-attachments/assets/818967f5-f324-49c7-a295-00884047e50a)
+      ![2](https://github.com/user-attachments/assets/818967f5-f324-49c7-a295-00884047e50a)  
 
    4. Создал VPC с подсетями в разных зонах доступности:
 
@@ -95,7 +95,7 @@
          v4_cidr_blocks = var.public_cidr
       }
       ```     
-      ![3](https://github.com/user-attachments/assets/f4b259ea-03aa-4c5c-9d94-66934e813c28)
+      ![3](https://github.com/user-attachments/assets/f4b259ea-03aa-4c5c-9d94-66934e813c28)  
 
    5. Убедился, что terraform apply и terraform destroy выполняются без дополнительных ручных действий.
 
@@ -432,10 +432,10 @@
    
       git clone https://github.com/kubernetes-sigs/kubespray.git
 
-   13. Запустил terraform apply. После корректировки конфигов, изменения несоответствия и скачивания дополнительных модулей, kubespray поднялся:
-      ![6](https://github.com/user-attachments/assets/a7dfd565-d92c-4e34-a448-d175e4c408f7)
+   13. Запустил terraform apply. После корректировки конфигов, изменения несоответствия и скачивания дополнительных модулей, kubespray поднялся:  
+      ![6](https://github.com/user-attachments/assets/a7dfd565-d92c-4e34-a448-d175e4c408f7)  
 
-      hosts.yml выглядит так:
+      hosts.yml выглядит так:  
       ```
       ---
       all:
@@ -486,14 +486,14 @@
                hosts: {}
       ```
 
-   14. Создались ВМ:
-       ![4](https://github.com/user-attachments/assets/8e91fbb5-23ae-4ec9-b7db-eeed11964987)
+   14. Создались ВМ:  
+       ![4](https://github.com/user-attachments/assets/8e91fbb5-23ae-4ec9-b7db-eeed11964987)  
 
-   15. Карта облачной сети выглядит так:
-       ![5](https://github.com/user-attachments/assets/150030b0-5c9b-4157-849e-f5bf35987850)
+   15. Карта облачной сети выглядит так:  
+       ![5](https://github.com/user-attachments/assets/150030b0-5c9b-4157-849e-f5bf35987850)  
 
-   16. Через jump-хост зашел на мастера и проверил ноды и неймспейсы:
-       ![7](https://github.com/user-attachments/assets/2f5dd141-d5bc-4ab7-9491-64c42252a43e)
+   16. Через jump-хост зашел на мастера и проверил ноды и неймспейсы:  
+       ![7](https://github.com/user-attachments/assets/2f5dd141-d5bc-4ab7-9491-64c42252a43e)  
 
    17. Файл ~/.kube/config выглядит так:
 
@@ -521,8 +521,8 @@
 
 ### Создание тестового приложения
 
-   1. Создал отдельный репозиторий в github:
-      ![8](https://github.com/user-attachments/assets/ae1ae213-70c1-48a0-a710-ab085485f98d)
+   1. Создал отдельный репозиторий в github:  
+      ![8](https://github.com/user-attachments/assets/ae1ae213-70c1-48a0-a710-ab085485f98d)  
 
    2. Добавил в репозиторий простой index.html и картинку:
 
@@ -587,8 +587,8 @@
       CMD ["nginx", "-g", "daemon off;"]
       ```
 
-   4. Создал образ из Dockerfile:
-      ![9](https://github.com/user-attachments/assets/2991b56b-7f9b-4b49-8ff7-baf0b428ee56)
+   4. Создал образ из Dockerfile:  
+      ![9](https://github.com/user-attachments/assets/2991b56b-7f9b-4b49-8ff7-baf0b428ee56)  
 
    5. Зарегистрировался в yandex cloud через ус. Аутентифицировался в Container Registry командой:
 
@@ -614,7 +614,8 @@
 	  members = [
 	    "system:allUsers",
 
-	  ]	}
+	  ]
+      }
 
       resource "yandex_container_registry_iam_binding" "pusher" {
 	  registry_id = yandex_container_registry.my-reg.id
@@ -623,16 +624,18 @@
 	  members = [
 	    "system:allUsers",
 	  ]
-	}
+      }
 
       ```
 
-   7. Создал необходимый тег для образа:
+   7. Создал необходимый тег для образа:  
+      ![10](https://github.com/user-attachments/assets/0af5bb39-79c4-41fa-bc20-4fa38b61b83b)
 
-
-   8. Запушил образ в Container Registry:
-
-
+   8. Запушил образ в Container Registry:  
+      ![11](https://github.com/user-attachments/assets/45558579-4d25-4ecb-9fc0-6ea597daccd6)
+      
+   9. Увидел, что образ появился в Container Registry:
+      ![12](https://github.com/user-attachments/assets/34255f96-13b7-4dcc-911c-61e0ff6b560c)
 
 ### Подготовка cистемы мониторинга и деплой приложения
 
@@ -899,13 +902,14 @@
          ansible.builtin.import_playbook: deploy-app.yml
       ```
 
-   9. После использования команды "terraform apply", увидел создание балансировщика в консоли Yandex Cloud:
+   9. После использования команды "terraform apply", увидел создание балансировщика в консоли Yandex Cloud:  
+      ![14](https://github.com/user-attachments/assets/d9f7142e-77d8-4a94-bfb6-7211ab2a0560)
 
+   10. Получил доступ к графане:  
+       ![13](https://github.com/user-attachments/assets/ca22820f-f452-4557-b567-bcfd37692023)
 
-   10. Получил доступ к графане:
-
-
-   11. Увидел уже созданные дашборды, показывающие состояние кластера:
+   11. Увидел уже созданные дашборды, показывающие состояние кластера:  
+       ![15](https://github.com/user-attachments/assets/58d89ece-f5db-4efe-9bff-0ed3247cb798)
 
 ### Установка и настройка CI/CD
 
@@ -1056,18 +1060,18 @@
    ```
    kubectl create clusterrolebinding cluster-system-anonymous --clusterrole=cluster-admin --user=system:anonymous
    ```
-
+   ![21](https://github.com/user-attachments/assets/1b10bb2b-44d6-43a0-9ba7-7362964819c8)
 
    6. Проделал первоначальную установку Jenkins:
-
+      ![16](https://github.com/user-attachments/assets/f833b9ec-ee7b-446c-b200-5e50b2d5a167)
 
    7. Настроил webhook в веб-интерфейсе GitHub:
-
+      ![17](https://github.com/user-attachments/assets/4d0d0a72-862d-4c84-bc1c-36997c45485a)
 
    8. Для настройки агентов для сборки, установил плагин Kubernetes для Jenkins, создал облако Kubernetes, в настройках прописал пространство имен devops-tools и доступ к кластеру по сокету <ip_balancer>:32400, протестировал соединение.
+      ![18](https://github.com/user-attachments/assets/9f5a9537-1f31-4892-a18d-834dec275e99)
 
-
-   9. Создал шаблон пода jenkins-agent, где указал неймспейс, лейблы и его использование.
+   9. Создал шаблон пода jenkins-agent, где указал неймспейс, лейблы и способы его применения.
 
    10. Создал job, в котором указал источник git, и pipeline:
 
@@ -1132,8 +1136,14 @@
       }
       ```
 
-   11. Исправил в main ветке index.html, проверил pipeline:
+   11. Проверил доступность приложения:  
+       ![20](https://github.com/user-attachments/assets/10c3ccc6-887f-4dc2-9799-f120b236737b)
+       
+   13. Исправил в main ветке index.html, проверил джобу:  
+       ![19](https://github.com/user-attachments/assets/fe92d97a-e98a-4382-a7d4-7179f5f241fe)
 
+   14. Новая версия приложения применилась:  
+       ![22](https://github.com/user-attachments/assets/dbb6b290-d223-42fc-9efb-7fd7d7dc81e7)
 
 
 
