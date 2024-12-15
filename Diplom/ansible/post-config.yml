@@ -1,0 +1,86 @@
+---
+- name: Configure kubespray
+  hosts: kube_control_plane
+  become: true
+  gather_facts: false
+  
+  tasks:  
+    - name: Get user home directory
+      getent:
+        database: passwd
+        key: "{{ ansible_user }}"
+      register: user_info
+
+    - name: Extract home directory from user_info
+      set_fact:
+        home_dir: "{{ user_info.ansible_facts.getent_passwd.ubuntu[4] }}"
+
+    - name: Make directory for config
+      ansible.builtin.file:
+        path: "{{ home_dir }}/.kube"
+        state: directory
+        mode: '0755'
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+
+    - name: Copy config
+      ansible.builtin.copy:
+        remote_src: true
+        src: "/etc/kubernetes/admin.conf"
+        dest: "{{ home_dir }}/.kube/config"
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+
+    - name: Make directory
+      ansible.builtin.file:
+        path: "{{ home_dir }}/k8s"
+        state: directory
+        mode: '0755'
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+
+    - name: Update apt cache
+      apt:
+        update_cache: true
+
+    - name: Install required system packages
+      apt:
+        pkg:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - gnupg-agent
+          - software-properties-common
+
+    - name: Add Docker's official GPG key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add Docker repository
+      apt_repository:
+        repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable
+        state: present
+
+    - name: Update apt and install docker-ce
+      apt:
+        name: docker-ce
+        state: latest
+        update_cache: true
+
+    - name: Ensure Docker service is started and enabled
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Add current user to docker group
+      user:
+        name: "{{ ansible_user }}"
+        groups: docker
+        append: yes
+
+    - name: Set permessions on /var/run/docker.sock
+      file:
+        path: /var/run/docker.sock
+        mode: '0666'

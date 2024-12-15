@@ -1,0 +1,24 @@
+- name: Deploy app
+  hosts: kube_control_plane
+  gather_facts: true
+  become: false
+
+  tasks:
+  - name: Copy app-deployment
+    ansible.builtin.copy:
+      src: 'app-deployment.yml'
+      dest: '~/'
+      mode: '0644'
+
+  - name: Copy app-service
+    ansible.builtin.copy:
+      src: 'app-service.yml'
+      dest: '~/'
+      mode: '0644'
+
+  - name: Deploy app
+    ansible.builtin.command:
+      cmd: 'kubectl apply -f {{ item }}'
+    with_items:
+      - '~/app-deployment.yml'
+      - '~/app-service.yml'

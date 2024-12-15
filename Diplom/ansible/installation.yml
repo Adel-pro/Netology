@@ -1,0 +1,18 @@
+---
+- name: Prepare to install kubespray
+  ansible.builtin.import_playbook: pre-config.yml
+ 
+- name: Install kubespray
+  ansible.builtin.import_playbook: kubespray/cluster.yml
+
+- name: Copy config kubespray
+  ansible.builtin.import_playbook: post-config.yml
+
+- name: Install monitoring tools
+  ansible.builtin.import_playbook: install-monitoring.yml
+
+- name: Deploy app
+  ansible.builtin.import_playbook: deploy-app.yml
+
+- name: Install jenkins
+  ansible.builtin.import_playbook: install-jenkins.yml
