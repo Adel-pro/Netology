@@ -565,7 +565,7 @@
 
       <body>
 	      <div class="image-text-container">
-            <img src="sunrise.jpeg">
+            <img src="images/sunrise.jpeg">
             <div class="text-overlay">
                <button onclick="showAlert()">Я сдал дипломную работу?</button>
                <script>
@@ -585,6 +585,7 @@
       ```
       FROM nginx:1.26.2
       COPY index.html /usr/share/nginx/html/index.html
+      COPY images /usr/share/nginx/html/images/
       EXPOSE 80
       CMD ["nginx", "-g", "daemon off;"]
       ```
