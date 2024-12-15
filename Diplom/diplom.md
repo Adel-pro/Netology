@@ -383,108 +383,108 @@
 
    10. Подготовил основной playbook для установки kubespray:
 
-      ```
-      ---
-      -  name: Prepare to install kubespray
-            ansible.builtin.import_playbook: pre-config.yml
+       ```
+       ---
+       -  name: Prepare to install kubespray
+             ansible.builtin.import_playbook: pre-config.yml
    
-      -  name: Install kubespray
-            ansible.builtin.import_playbook: kubespray/cluster.yml
+       -  name: Install kubespray
+             ansible.builtin.import_playbook: kubespray/cluster.yml
 
-      -  name: Copy config kubespray
-            ansible.builtin.import_playbook: post-config.yml
-      ```
+       -  name: Copy config kubespray
+             ansible.builtin.import_playbook: post-config.yml
+       ```
 
    11. Создал файл для создания inventory и выполнения основного playbook:
 
-      ```
-      resource "local_file" "hosts_templatefile" {
-         depends_on = [
-            yandex_compute_instance.masters,
-            yandex_compute_instance.slaves,
-            yandex_compute_instance.nat-instance,
-         ]
+       ```
+       resource "local_file" "hosts_templatefile" {
+	  depends_on = [
+	     yandex_compute_instance.masters,
+	     yandex_compute_instance.slaves,
+	     yandex_compute_instance.nat-instance,
+	  ]
 
-         content = templatefile("${path.module}/hosts.tftpl",
+	  content = templatefile("${path.module}/hosts.tftpl",
 
-            { masters      = yandex_compute_instance.masters[*],
-               slaves       = yandex_compute_instance.slaves[*],
-               nat_instance = yandex_compute_instance.nat-instance,
-            }
-            )
-         filename = "${abspath(path.module)}/../ansible/hosts.yml"
-      }
+	     { masters      = yandex_compute_instance.masters[*],
+	        slaves       = yandex_compute_instance.slaves[*],
+	        nat_instance = yandex_compute_instance.nat-instance,
+	     }
+	     )
+	  filename = "${abspath(path.module)}/../ansible/hosts.yml"
+       }
 
-      resource "null_resource" "installation" {
-         depends_on = [
-            yandex_compute_instance.masters,
-            yandex_compute_instance.slaves,
-            yandex_compute_instance.nat-instance,
-         ]
+       resource "null_resource" "installation" {
+	  depends_on = [
+	     yandex_compute_instance.masters,
+	     yandex_compute_instance.slaves,
+	     yandex_compute_instance.nat-instance,
+	  ]
 
-         provisioner "local-exec" {
-            command = "export ANSIBLE_HOST_KEY_CHECKING=False; ansible-playbook -i ../ansible/hosts.yml -b ../ansible/installation.yml"
-         }
-      }
-      ```
+	  provisioner "local-exec" {
+	     command = "export ANSIBLE_HOST_KEY_CHECKING=False; ansible-playbook -i ../ansible/hosts.yml -b ../ansible/installation.yml"
+	  }
+       }
+       ```
 
    12. Склонировал репозиторий kubespray командой 
    
-      git clone https://github.com/kubernetes-sigs/kubespray.git
+       git clone https://github.com/kubernetes-sigs/kubespray.git
 
    13. Запустил terraform apply. После корректировки конфигов, изменения несоответствия и скачивания дополнительных модулей, kubespray поднялся:  
-      ![6](https://github.com/user-attachments/assets/a7dfd565-d92c-4e34-a448-d175e4c408f7)  
+       ![6](https://github.com/user-attachments/assets/a7dfd565-d92c-4e34-a448-d175e4c408f7)  
 
-      hosts.yml выглядит так:  
-      ```
-      ---
-      all:
-         vars:
-            ansible_ssh_user: ubuntu
-            ansible_ssh_private_key_file: ~/.ssh/id_rsa
-            ansible_ssh_common_args: '-o ProxyCommand="ssh -W %h:%p -q -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "{{ ansible_ssh_user }}"@89.169.136.32 -i "{{ ansible_ssh_private_key_file }}""'
-            become: true
-            ansible_python_interpreter: /usr/bin/python3
+       hosts.yml выглядит так:  
+       ```
+       ---
+       all:
+          vars:
+             ansible_ssh_user: ubuntu
+             ansible_ssh_private_key_file: ~/.ssh/id_rsa
+             ansible_ssh_common_args: '-o ProxyCommand="ssh -W %h:%p -q -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "{{ ansible_ssh_user }}"@89.169.136.32 -i "{{ ansible_ssh_private_key_file }}""'
+             become: true
+             ansible_python_interpreter: /usr/bin/python3
 
-         hosts:
+          hosts:
 
-            master:
-               ansible_host: 10.10.10.20
-               ip: 10.10.10.20
-               access_ip: 10.10.10.20
+             master:
+                ansible_host: 10.10.10.20
+                ip: 10.10.10.20
+                access_ip: 10.10.10.20
       
-            slave-1:
-               ansible_host: 10.10.10.4
-               ip: 10.10.10.4
-               access_ip: 10.10.10.4
+             slave-1:
+                ansible_host: 10.10.10.4
+                ip: 10.10.10.4
+                access_ip: 10.10.10.4
             
-            slave-2:
-               ansible_host: 10.10.20.21
-               ip: 10.10.20.21
-               access_ip: 10.10.20.21
+             slave-2:
+                ansible_host: 10.10.20.21
+                ip: 10.10.20.21
+                access_ip: 10.10.20.21
 
-         children:
-            kube_control_plane:
-               hosts:
-               master:
+          children:
+             kube_control_plane:
+                hosts:
+                master:
     
-            kube_node:
-               hosts:
-               slave-1:
-               slave-2:
+             kube_node:
+                hosts:
+                slave-1:
+                slave-2:
             
-            etcd:
-               hosts:
-               master:
+             etcd:
+                hosts:
+                master:
 
-            k8s_cluster:
-               children:
-               kube_control_plane:
-               kube_node:
+             k8s_cluster:
+                children:
+                kube_control_plane:
+                kube_node:
 
-            calico_rr:
-               hosts: {}
-      ```
+             calico_rr:
+                hosts: {}
+       ```
 
    14. Создались ВМ:  
        ![4](https://github.com/user-attachments/assets/8e91fbb5-23ae-4ec9-b7db-eeed11964987)  
@@ -497,27 +497,27 @@
 
    17. Файл ~/.kube/config выглядит так:
 
-      ```
-      apiVersion: v1
-      clusters:
-      -  cluster:
-         certificate-authority-data: ...
-         server: https://127.0.0.1:6443
-      name: cluster.local
-      contexts:
-      -  context:
-         cluster: cluster.local
-         user: kubernetes-admin
-      name: kubernetes-admin@cluster.local
-      current-context: kubernetes-admin@cluster.local
-      kind: Config
-      preferences: {}
-      users:
-      -  name: kubernetes-admin
-         user:
-            client-certificate-data: ...
-            client-key-data: ...
-      ```
+       ```
+       apiVersion: v1
+       clusters:
+       -  cluster:
+          certificate-authority-data: ...
+          server: https://127.0.0.1:6443
+       name: cluster.local
+       contexts:
+       -  context:
+          cluster: cluster.local
+          user: kubernetes-admin
+       name: kubernetes-admin@cluster.local
+       current-context: kubernetes-admin@cluster.local
+       kind: Config
+       preferences: {}
+       users:
+       -  name: kubernetes-admin
+          user:
+             client-certificate-data: ...
+             client-key-data: ...
+       ```
 
 ### Создание тестового приложения
 
