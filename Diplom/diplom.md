@@ -49,6 +49,7 @@
 
    2. Ввел команды:
 
+      terraform init
       terraform plan  
       terraform apply  
       terraform output s3_access_key  
@@ -75,12 +76,12 @@
       ```
 
       Подставил значения в access_key и secret_key, которые получил через terraform output. Ввел terraform init:  
-      
+      ![1](https://github.com/user-attachments/assets/2a383a44-b451-473c-9ca4-896f825148cb)
 
       Terraform.tfstate записался в bucket:  
+      ![2](https://github.com/user-attachments/assets/818967f5-f324-49c7-a295-00884047e50a)
 
-
-   3. Создал VPC с подсетями в разных зонах доступности:
+   4. Создал VPC с подсетями в разных зонах доступности:
 
       ```
       resource "yandex_vpc_network" "netology-net" {
@@ -94,8 +95,9 @@
          v4_cidr_blocks = var.public_cidr
       }
       ```     
+      ![3](https://github.com/user-attachments/assets/f4b259ea-03aa-4c5c-9d94-66934e813c28)
 
-   4. Убедился, что terraform apply и terraform destroy выполняются без дополнительных ручных действий.
+   5. Убедился, что terraform apply и terraform destroy выполняются без дополнительных ручных действий.
 
 ### Создание Kubernetes кластера
 
@@ -431,10 +433,9 @@
       git clone https://github.com/kubernetes-sigs/kubespray.git
 
    13. Запустил terraform apply. После корректировки конфигов, изменения несоответствия и скачивания дополнительных модулей, kubespray поднялся:
-
+      ![6](https://github.com/user-attachments/assets/a7dfd565-d92c-4e34-a448-d175e4c408f7)
 
       hosts.yml выглядит так:
-
       ```
       ---
       all:
@@ -486,13 +487,13 @@
       ```
 
    14. Создались ВМ:
-
+       ![4](https://github.com/user-attachments/assets/8e91fbb5-23ae-4ec9-b7db-eeed11964987)
 
    15. Карта облачной сети выглядит так:
-
+       ![5](https://github.com/user-attachments/assets/150030b0-5c9b-4157-849e-f5bf35987850)
 
    16. Через jump-хост зашел на мастера и проверил ноды и неймспейсы:
-
+       ![7](https://github.com/user-attachments/assets/2f5dd141-d5bc-4ab7-9491-64c42252a43e)
 
    17. Файл ~/.kube/config выглядит так:
 
@@ -521,7 +522,7 @@
 ### Создание тестового приложения
 
    1. Создал отдельный репозиторий в github:
-
+      ![8](https://github.com/user-attachments/assets/ae1ae213-70c1-48a0-a710-ab085485f98d)
 
    2. Добавил в репозиторий простой index.html и картинку:
 
@@ -587,13 +588,15 @@
       ```
 
    4. Создал образ из Dockerfile:
-
+      ![9](https://github.com/user-attachments/assets/2991b56b-7f9b-4b49-8ff7-baf0b428ee56)
 
    5. Зарегистрировался в yandex cloud через ус. Аутентифицировался в Container Registry командой:
 
-    echo <token>|docker login --username oauth --password-stdin cr.yandex
+      ```
+      echo <token>|docker login --username oauth --password-stdin cr.yandex
+      ```
 
-   6. Создал Container Registry через Terraform и дал права на push в Container Registry (container-registry.images.pusher):
+   6. Создал Container Registry через Terraform и дал права на pull и push:
 
       ```
       resource "yandex_container_registry" "my-reg" {
@@ -603,6 +606,25 @@
             my-label = "docker-images"
          }
       }
+
+      resource "yandex_container_registry_iam_binding" "puller" {
+	  registry_id = yandex_container_registry.my-reg.id
+	  role        = "container-registry.images.pusher"
+	
+	  members = [
+	    "system:allUsers",
+
+	  ]	}
+
+      resource "yandex_container_registry_iam_binding" "pusher" {
+	  registry_id = yandex_container_registry.my-reg.id
+	  role        = "container-registry.images.puller"
+	
+	  members = [
+	    "system:allUsers",
+	  ]
+	}
+
       ```
 
    7. Создал необходимый тег для образа:
