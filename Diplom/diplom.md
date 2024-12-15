@@ -31,7 +31,7 @@
       }
       ``` 
   
-   Также, настроил output для получения access_key и secret_key:  
+      Также, настроил output для получения access_key и secret_key:  
       
       ```
       output "s3_access_key" {
