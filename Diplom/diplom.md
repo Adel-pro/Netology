@@ -1010,11 +1010,11 @@
 
       ```
       resource "yandex_lb_target_group" "nlb-k8s" {
-      name = "nlb-k8s"
-      target {
-         subnet_id = yandex_compute_instance.masters.network_interface.0.subnet_id
-         address   = yandex_compute_instance.masters.network_interface.0.ip_address
-      }
+         name = "nlb-k8s"
+         target {
+            subnet_id = yandex_compute_instance.masters.network_interface.0.subnet_id
+            address   = yandex_compute_instance.masters.network_interface.0.ip_address
+         }
       }
 
 
@@ -1137,7 +1137,10 @@
        ![20](https://github.com/user-attachments/assets/10c3ccc6-887f-4dc2-9799-f120b236737b)
        
    13. Исправил в main ветке index.html, проверил джобу:  
-       ![19](https://github.com/user-attachments/assets/fe92d97a-e98a-4382-a7d4-7179f5f241fe)
+       ![23](https://github.com/user-attachments/assets/2444fe3a-0f4d-45fb-aaff-56ef312f408e)  
+       ![24](https://github.com/user-attachments/assets/7b070a3e-833d-437b-a629-992c368a4879)  
+       ![25](https://github.com/user-attachments/assets/a874e998-e8ae-44ac-aef5-d084032ee703)  
+       ![26](https://github.com/user-attachments/assets/fc5796fe-4c37-48cb-a36f-104af1cafde7)  
 
    14. Новая версия приложения применилась:  
        ![22](https://github.com/user-attachments/assets/dbb6b290-d223-42fc-9efb-7fd7d7dc81e7)
