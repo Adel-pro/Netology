@@ -1114,7 +1114,7 @@
                       script {
                          def tag = env.GIT_TAG_NAME ?: 'latest'
                          sh """
-       			 ssh -o ProxyCommand=ssh -T -W %h:%p ubuntu@51.250.88.216 ubuntu@10.10.10.23 \
+                         ssh -o ProxyCommand=ssh -T -W %h:%p ubuntu@51.250.88.216 ubuntu@10.10.10.23 \
                          kubectl set image deployment/myapp-nginx nginx=${CONTAINER_REGISTRY}:${tag} && \
                          kubectl rollout status deployment/myapp-nginx
                          """
