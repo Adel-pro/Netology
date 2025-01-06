@@ -955,7 +955,7 @@
        ```  
        ![29](https://github.com/user-attachments/assets/76b18731-5f20-4b89-b72a-67af12b9ad46)
 
-   14. Создал репозиторий terraform, выложил в репозиторий рабочие файлы teraform и создал файл atlantis.yaml в корне репозитория:  
+   14. Создал репозиторий terraform, выложил в репозиторий рабочие файлы terraform и создал файл atlantis.yaml в корне репозитория:  
 
        ```
        version: 3
