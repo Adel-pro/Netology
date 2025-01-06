@@ -910,7 +910,80 @@
        ![13](https://github.com/user-attachments/assets/ca22820f-f452-4557-b567-bcfd37692023)
 
    11. Увидел уже созданные дашборды, показывающие состояние кластера:  
-       ![15](https://github.com/user-attachments/assets/58d89ece-f5db-4efe-9bff-0ed3247cb798)
+       ![15](https://github.com/user-attachments/assets/58d89ece-f5db-4efe-9bff-0ed3247cb798)  
+
+   12. Также, для отслеживания изменений инфраструктуры поднял atlantis. Вначале, создал свой образ для избежания ошибок с версией terraform. Использовал следующий Dockerfile:  
+
+       ```
+       # Используем официальный образ Atlantis
+       FROM runatlantis/atlantis:latest
+
+       # Устанавливаем нужную версию Terraform
+       ARG TERRAFORM_VERSION=1.5.4
+
+       # Скачиваем Terraform
+       RUN wget https://hashicorp-releases.yandexcloud.net/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
+           unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
+           mv terraform /usr/local/bin/ && \
+           rm terraform_${TERRAFORM_VERSION}_linux_amd64.zip
+
+       # Проверка версии Terraform
+       RUN terraform version
+
+       # Настройка рабочей директории
+       WORKDIR /home/atlantis/.atlantis
+
+       # Запуск Atlantis
+       ENTRYPOINT ["atlantis"]
+       ```
+
+   13. Далее, поднял atlantis через docker:  
+
+       ```
+       docker run \
+         -d \
+         --name atlantis \
+         -p 4141:4141 \
+         -e ATLANTIS_REPO_ALLOWLIST="github.com/Adel-pro/terraform" \
+         -e ATLANTIS_URL="http://51.250.70.205:4141" \
+         -e ATLANTIS_GH_USER="Adel-pro" \
+         -e ATLANTIS_GH_TOKEN="***" \
+         -e ATLANTIS_SECRET="***" \
+         -e ATLANTIS_LOG_LEVEL="debug" \
+         -v "/home/ubuntu/atlantis:/home/atlantis/.atlantis" \
+         my-atlantis:latest server
+       ```  
+       ![29](https://github.com/user-attachments/assets/76b18731-5f20-4b89-b72a-67af12b9ad46)
+
+   14. Создал репозиторий terraform, выложил в репозиторий рабочие файлы teraform и создал файл atlantis.yaml в корне репозитория:  
+
+       ```
+       version: 3
+       projects:
+         - name: my-project
+           dir: .
+           terraform_version: 1.5.4
+           autoplan:
+             enabled: true
+             when_modified: ["*.tf", "*.tfvars"]
+           workflow: default
+
+       workflows:
+         default:   
+           plan:
+             steps:
+               - init
+               - plan
+           apply:
+             steps:
+               - apply
+       ```
+
+   15. Настроил Webhooks в репозитории terraform:  
+       ![30](https://github.com/user-attachments/assets/2afa074d-73e5-42bd-93fc-fcddf42218fc)
+
+   16. Рестартанул контейнер командой "docker restart atlantis", внес незначительные изменения в tf-файлы в репозитории, убедился, что webhook сработал и atlantis применил изменения:  
+       ![31](https://github.com/user-attachments/assets/f53876cf-21b2-4deb-bc74-bb0ae9ff0da5)
 
 ### Установка и настройка CI/CD
 
